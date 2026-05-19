@@ -19,6 +19,9 @@ const auth = new google.auth.GoogleAuth({
 const sheets = google.sheets({ version: "v4", auth });
 const template = await fs.readFile("./templates/page.html", "utf8");
 
+await fs.mkdir("dist/", { recursive: true });
+await fs.cp("static", "dist", { recursive: true });
+
 const response = await sheets.spreadsheets.values.get({
   spreadsheetId: SHEET_ID,
   range: "Equipment"
@@ -30,7 +33,7 @@ for (const values of rows) {
   const row = Object.fromEntries(
     headers.map((h, i) => [formatHeaderAsIDString(h), values[i]])
   );
-  row.title = `Item ${row.id}: ${name}`;
+  row.title = `Item ${row.id}: ${row.name}`;
 
   const html = Mustache.render(template, row);
   const dir = `dist/`;
