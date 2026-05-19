@@ -1,0 +1,39 @@
+name: Build static pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 */6 * * *'   # every 6 hours; tweak or remove
+  workflow_dispatch:
+
+permissions:
+  contents: write    # needed if you commit dist/ back; drop to 'read' otherwise
+  id-token: write    # required for Workload Identity Federation
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/POOL_ID/providers/PROVIDER_ID
+          service_account: SA_NAME@PROJECT_ID.iam.gserviceaccount.com
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: npm run generate
+        env:
+          SHEET_ID: ${{ vars.SHEET_ID }}
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/

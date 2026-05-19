@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{title}}</title>
+  <link rel="stylesheet" href="/page.css">
+</head>
+<body>
+  <h1>{{title}}</h1>
+
+  <table border="1" cellpadding="6" style="border-collapse: collapse;">
+    <tbody><tr>
+        <th><span title="Generated row ID from the spreadsheet" class="hinted">ID</span></th>
+        <td>{{id}}</td>
+      </tr><tr>
+        <th><span title="" class="">Name</span></th>
+        <td>{{name}}</td>
+      </tr><tr>
+        <th><span title="" class="">Quantity</span></th>
+        <td>{{quantity}}</td>
+      </tr><tr>
+        <th><span title="If the thing is known to be working/ready, broken or whatever." class="hinted">Status</span></th>
+        <td>{{status}}</td>
+      </tr><tr>
+        <th><span title="Is there an individual &quot;owns&quot; this? It could be off-premises, under repair or otherwise exclusively accessible. Don't use or move the thing without contacting this person." class="hinted">Assigned To</span></th>
+        <td></td>
+      </tr><tr>
+        <th><span title="Where the thing is physically located." class="hinted">Location</span></th>
+        <td>{{assigned_to}}</td>
+      </tr><tr>
+        <th><span title="A web page (e.g. on the wiki) with more information about it." class="hinted">Details URL</span></th>
+        <td><a href="{{details_url}}">{{details_url}}</a></td>
+      </tr><tr>
+        <th><span title="URL to a signed document detailing ownership. Relevant for donated or on-loan items only." class="hinted">Agreement URL</span></th>
+        <td>{{agreement_url}}</td>
+      </tr><tr>
+        <th><span title="" class="">Inventory URL</span></th>
+        <td><a href="{{inventory_url}}">{{inventory_url}}</a></td>
+      </tr><tr>
+        <th><span title="" class="">Owner</span></th>
+        <td>{{owner}}</td>
+      </tr><tr>
+        <th><span title="" class="">Notes</span></th>
+        <td>{{notes}}</td>
+      </tr>
+  </tbody></table>
+</body>
+</html>
