@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Eugene Makerspace: Inventory</title>
+  <link rel="stylesheet" href="page.css">
+</head>
+<body>
+  <header class="header">
+	<h1><span>Eugene Makerspace: Inventory</span></h1>
+  </header>
+
+  <main>
+  <ul>
+    {{#items}}
+    <li><a href="{{href}}">{{title}}</a></li>
+    {{/items}}
+  </ul>
+  </main>
+</body>
+</html>
