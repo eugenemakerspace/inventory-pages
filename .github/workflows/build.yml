@@ -1,4 +1,4 @@
-name: Build static pages
+name: Build and deploy static pages
 
 on:
   push:
@@ -8,8 +8,14 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write    # needed if you commit dist/ back; drop to 'read' otherwise
-  id-token: write    # required for Workload Identity Federation
+  contents: read
+  id-token: write   # required for WIF (auth to Google) and Pages deployment OIDC
+  pages: write     # required for Pages deployment
+
+# Allow one concurrent deployment; cancel in-progress runs of older commits
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -33,7 +39,16 @@ jobs:
         env:
           SHEET_ID: ${{ vars.SHEET_ID }}
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-pages-artifact@v3
         with:
-          name: dist
           path: dist/
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
